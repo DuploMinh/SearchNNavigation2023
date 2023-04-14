@@ -1,0 +1,8 @@
+<launch>
+    <param name="use_sim_time" value="false" />
+    <include file="$(find trd_driver)/launch/trd_control.launch">
+        <arg name="serialport" value="/dev/motor_trd" />
+    </include>
+    <include file="$(find ls01d)/launch/ls01d.launch" />
+    <node pkg="gmapping" type="slam_gmapping" name="slam_gmapping" />
+</launch>

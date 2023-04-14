@@ -1,0 +1,6 @@
+<launch>
+
+    <node name="gotopose" pkg="aiil_rosbot_demo" type="goToPose.py" output="screen">
+    </node>
+
+</launch>

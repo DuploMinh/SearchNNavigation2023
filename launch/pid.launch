@@ -1,0 +1,7 @@
+<launch>
+
+    <node name="pid" pkg="aiil_rosbot_demo" type="pid.py" >
+        <param name="duration" value="5" />
+    </node>
+
+</launch>

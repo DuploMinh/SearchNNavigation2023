@@ -1,0 +1,9 @@
+<launch>
+    <arg name="use_gazebo" default="false" />
+    <arg name="teach" default="false"/>
+    <node pkg="aiil_rosbot_demo" type="find_object_2d" name="find_object_2d">
+        <remap from="image" to="/camera/rgb/image_raw"/>
+        <param name="gui" value="$(arg teach)"/>
+        <param unless="$(arg teach)" name="objects_path" value="$(find tutorial_pkg)/img_data/"/>
+    </node>
+</launch>
