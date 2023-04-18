@@ -5,10 +5,14 @@ from sensor_msgs.msg import LaserScan
 from geometry_msgs.msg import Twist
 from nav_msgs.msg import Odometry
 from tf import transformations
+from std_msgs.msg import Float32MultiArray
+from threading import Thread
 
 import math
 
 pub_ = None
+signsId=[]
+start = fa
 
 #laser regions
 regions_ = {
@@ -113,32 +117,36 @@ def follow_the_wall():
     msg.linear.x = 0.1
     return msg
 
+def sign(sign):
+    if sign[0]==0:
+        start=True
+    
+    
 def main():
     global pub_
     
     rospy.init_node('reading_laser')
     
     pub_ = rospy.Publisher('/cmd_vel', Twist, queue_size=1)
-    
     sub = rospy.Subscriber('/scan', LaserScan, clbk_laser)
-    
+    signs = rospy.Subscriber("/objects", Float32MultiArray, sign)
     rate = rospy.Rate(20)
     while not rospy.is_shutdown():
-
-        msg = Twist()
-        if state_ == 0:
-            msg = find_wall()
-        elif state_ == 1:
-            msg = turn_left()
-        elif state_ == 2:
-            msg = follow_the_wall()
-            pass
-        else:
-            rospy.logerr('Unknown state!')
-        
-        pub_.publish(msg)
-        
-        rate.sleep()
+        while start:
+            msg = Twist()
+            if state_ == 0:
+                msg = find_wall()
+            elif state_ == 1:
+                msg = turn_left()
+            elif state_ == 2:
+                msg = follow_the_wall()
+                pass
+            else:
+                rospy.logerr('Unknown state!')
+            
+            pub_.publish(msg)
+            
+            rate.sleep()
 
 if __name__ == '__main__':
     main()

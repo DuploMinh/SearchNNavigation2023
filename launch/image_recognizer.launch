@@ -1,0 +1,4 @@
+<launch>
+	<node pkg="team_8_search_nav" name="image_recognizer" type="image_recognizer.py">
+	</node>
+</launch>
