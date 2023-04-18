@@ -31,7 +31,4 @@
 	<!-- Example of tf synchronisation with the objectsStamped message -->
 	<node if="$(arg tf_example)" name="tf_example" pkg="find_object_2d" type="tf_example" output="screen">
 		<param name="object_prefix" value="$(arg object_prefix)" type="str"/>
-	</node>
-	<node pkg="team_8_search_nav" name="image_recognizer" type="image_recognizer.py">
-	</node>
 </launch>
