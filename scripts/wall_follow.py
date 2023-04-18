@@ -12,7 +12,7 @@ import math
 
 pub_ = None
 signsId=[]
-start = fa
+start = False
 
 #laser regions
 regions_ = {
@@ -118,8 +118,9 @@ def follow_the_wall():
     return msg
 
 def sign(sign):
-    if sign[0]==0:
+    if int(sign[0])==27:
         start=True
+    
     
     
 def main():

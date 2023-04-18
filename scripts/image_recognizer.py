@@ -11,11 +11,12 @@ import find_object_2d.msg._ObjectsStamped
 
 
 def callback(self, data:find_object_2d.msg.ObjectsStamped):
-    id = data.objects[0]
-    marker.header.frame_id(id)
+    id = int(data.objects.data[0])
     objectID='object'+id
+    now = rospy.Time.now()
     try:
-        (trans,rot) = listener.lookupTransform('map',objectID, rospy.Time())
+        listener.waitForTransform("/turtle2", "/carrot1", now, rospy.Duration(4.0))
+        (trans,rot) = listener.lookupTransform('map',objectID, now)
     except (tf.LookupException, tf.ConnectivityException, tf.ExtrapolationException):
         pass
     pose = geometry_msgs.msg.Pose(orientation=rot,position=trans)
@@ -25,6 +26,7 @@ rospy.init_node('image_recognizer')
 listener = tf.TransformListener()
 while not rospy.is_shutdown():
     rospy.Subscriber("objectsStamped",find_object_2d.msg.ObjectsStamped,callback)
+    rospy.spin()
 pub = rospy.Publisher('/hazards',visualization_msgs.msg.Marker,queue_size=10)
 marker = visualization_msgs.msg.Marker()
-rospy.spin()
+
