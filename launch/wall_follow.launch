@@ -1,0 +1,4 @@
+<launch>
+    <node name = "wall_follow" pkg = "aiil_rosbot_demo" type = "wall_follow.py" output="screen" />
+
+</launch>
